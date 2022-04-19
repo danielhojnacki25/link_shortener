@@ -1,0 +1,19 @@
+﻿@page "/{shortLink}"
+@using LinkShortener.Common.Dtos.Links
+
+@inject HttpClient _httpClient
+@inject NavigationManager _navigationManager
+
+<h1>Redirecting...</h1>
+
+@code {
+    [Parameter]
+    public string shortLink { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var shortUrl = await _httpClient.GetFromJsonAsync<LinkDto>($"api/Link/{shortLink}");
+        if (shortUrl != null) 
+            _navigationManager.NavigateTo($"{shortUrl.OriginalUrl}", true);
+    }
+}

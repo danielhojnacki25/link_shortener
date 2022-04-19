@@ -1,0 +1,36 @@
+﻿@page "/link"
+
+@using LinkShortener.Common.ViewModels.Links
+@using LinkShortener.Common.Dtos.Links
+@inject HttpClient _httpClient
+@inject NavigationManager _navigationManager
+
+<EditForm Model="_linkToShortened" OnValidSubmit="HandleSubmit">
+    <div>
+        <label for="link">Your Link</label>
+        <InputText id="link" @bind-Value="_linkToShortened.Link" class="form-control"></InputText>
+    </div>
+    <button type="submit" style="margin-top: 20px" class="btn btn-primary">Short Your link</button>
+    
+    @if (!string.IsNullOrEmpty(_shortLink))
+    {
+        <div style="margin-top: 20px" class="shortened-url">@(_navigationManager.BaseUri + _shortLink)</div>
+    }
+</EditForm>
+
+@code {
+    LinkToShortenedViewModel _linkToShortened = new();
+
+    string _shortLink = string.Empty;
+
+    async Task HandleSubmit()
+    {
+        var result = await _httpClient.PostAsJsonAsync("api/link", new LinkDto {OriginalUrl = _linkToShortened.Link});
+        var linkShort = result.Content.ReadFromJsonAsync<LinkDto>();
+
+        if (linkShort.Result != null) 
+            _shortLink = linkShort.Result.ShortenedUrl;
+
+        StateHasChanged();;
+    }
+}

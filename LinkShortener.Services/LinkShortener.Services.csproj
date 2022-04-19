@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LinkShortener.Common\LinkShortener.Common.csproj" />
+    <ProjectReference Include="..\LinkShortener.Data\LinkShortener.Data.csproj" />
+    <ProjectReference Include="..\LinkShortener.Helpers\LinkShortener.Helpers.csproj" />
+    <ProjectReference Include="..\LinkShortener.Mappers\LinkShortener.Mappers.csproj" />
+  </ItemGroup>
+
+</Project>
